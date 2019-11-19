@@ -1,0 +1,49 @@
+Potentially Dangerous File Extensions
+Extension Format Operating System(s)
+ACTION	Automator Action	macOS
+APK	Application	Android
+APP	Executable	macOS
+BAT	Batch File	Windows
+BIN	Binary Executable	Windows, macOS, Linux
+CMD	Command Script	Windows
+COM	Command File	Windows
+COMMAND	Terminal Command	macOS
+CPL	Control Panel Extension	Windows
+CSH	C Shell Script	macOS, Linux
+EXE	Executable	Windows
+GADGET	Windows Gadget	Windows
+INF1	Setup Information File	Windows
+INS	Internet Communication Settings	Windows
+INX	InstallShield Compiled Script	Windows
+IPA	Application	iOS
+ISU	InstallShield Uninstaller Script	Windows
+JOB	Windows Task Scheduler Job File	Windows
+JSE	JScript Encoded File	Windows
+KSH	Unix Korn Shell Script	Linux
+LNK	File Shortcut	Windows
+MSC	Microsoft Common Console Document	Windows
+MSI	Windows Installer Package	Windows
+MSP	Windows Installer Patch	Windows
+MST	Windows Installer Setup Transform File	Windows
+OSX	Executable	macOS
+OUT	Executable	Linux
+PAF	Portable Application Installer File	Windows
+PIF	Program Information File	Windows
+PRG	Executable	GEM
+PS1	Windows PowerShell Cmdlet	Windows
+REG	Registry Data File	Windows
+RGS	Registry Script	Windows
+RUN	Executable	Linux
+SCR	Screensaver Executable	Windows
+SCT	Windows Scriptlet	Windows
+SHB	Windows Document Shortcut	Windows
+SHS	Shell Scrap Object	Windows
+U3P	U3 Smart Application	Windows
+VB	VBScript File	Windows
+VBE	VBScript Encoded Script	Windows
+VBS	VBScript File	Windows
+VBSCRIPT	Visual Basic Script	Windows
+WORKFLOW	Automator Workflow	macOS
+WS	Windows Script	Windows
+WSF	Windows Script	Windows
+WSH	Windows Script Preference	Windows
