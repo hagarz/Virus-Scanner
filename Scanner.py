@@ -100,18 +100,12 @@ def search_files(paths, ext_list):
         for (dirpath, dirnames, filenames) in os.walk(path):
             for file in filenames:
                 for ext in ext_list:
-                    if ext.lower() == "pyc" or ext.lower() == 'js':
-                        break
                     l_ext = ext.lower()
                     l_file = file.lower()
                     if l_file.endswith("." + l_ext):
                         tb_scanned.append(os.path.join(dirpath, file))
                         break
-            #     if len(tb_scanned) > 200:
-            #         break
-            # else:
-            #     continue
-            # break
+
     print(f"sending {len(tb_scanned)} to be scanned ")
 
     return tb_scanned
