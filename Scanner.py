@@ -18,75 +18,13 @@ def load_ext_list():
                 execution_extensions.append(row[0])
     file.close()
 
-    with open("more_exec_file_exte.txt", 'r') as f:
-        for row in f:
+    with open("high_risk_file_extII.txt", 'r') as file:
+        for row in file:
             row = [x.strip() for x in row.split('\t')]
             execution_extensions.append(row[0])
-    f.close()
+    file.close()
 
     return execution_extensions
-
-
-class UsersAndFolders(object):
-    """
-    creating a list of folder paths to be scanned
-    """
-    def __init__(self,path_list):
-
-        self.user_list = []
-        self.path_list = []
-        self.path_list = path_list
-
-        # initialize list of users:
-        self.user_list += [user for user in os.listdir(r'C:\Users')]
-
-        # add user-specific paths to list:
-        for user in self.user_list:
-            self.path_list.extend([
-                r'C:\Users\\' + str(user) + '\AppData\Local',
-                r'C:\Users\\' + str(user) + '\AppData\Roaming',
-                r'C:\Users\\' + str(user) + '\Desktop',
-                r'C:\Users\\' + str(user) + '\Downloads'
-            ])
-
-    def update_users(self):
-        """get all user names and return them in a list os strings"""
-        self.user_list += [user for user in os.listdir(r'C:\Users')]
-
-    def get_users(self):
-        return self.user_list
-
-    def update_paths(self):
-        for user in self.user_list:
-            self.path_list.append(
-                r'C:\Users\\' + str(user) + '\AppData\Local',
-                r'C:\Users\\' + str(user) + '\AppData\Roaming',
-                r'C:\Users\\' + str(user) + '\Desktop',
-                r'C:\Users\\' + str(user) + '\Downloads'
-            )
-
-    def get_paths(self):
-        return self.path_list
-
-
-class Scan(object):
-    """
-    This is the controller.
-    search executable files in folders, then send to virus total to be scanned and fetch report
-    """
-    def __init__(self,paths_list):
-        self.ext_list = load_ext_list()  # loading list of executables extensions
-        self.paths = paths_list  # initializing list of 'suspicious' folders
-        self.tb_scanned = []
-
-    def start_scan(self):
-        self.paths = UsersAndFolders(self.paths).get_paths()  # getting list of paths to 'suspicious' folders
-        self.tb_scanned = search_files(self.paths, self.ext_list)  # calling a method to scan the computer
-
-        # send files to VirusTotal for scanning
-        vt = VirusTotal.VirusTotal()
-        vt.vt_mng(self.tb_scanned[500:700])
-
 
 def search_files(paths, ext_list):
     """
@@ -109,6 +47,65 @@ def search_files(paths, ext_list):
     print(f"sending {len(tb_scanned)} to be scanned ")
 
     return tb_scanned
+
+
+class UsersAndFolders(object):
+    """
+    creating a list of folder paths to be scanned
+    """
+    def __init__(self,path_list):
+
+        self.user_list = []
+        self.path_list = []
+        self.path_list = path_list
+        self.suffixes = ['\AppData\Local', '\AppData\Roaming', '\Desktop', '\Downloads']
+
+        # initialize list of users:
+        self.user_list += [user for user in os.listdir(r'C:\Users')]
+
+        # add user-specific paths to list:
+
+        for user in self.user_list:
+            for suffix in self.suffixes:
+                self.path_list.extend([
+                    r'C:\Users\\' + str(user) + suffix
+                ])
+
+    def update_users(self):
+        """get all user names and return them in a list os strings"""
+        self.user_list += [user for user in os.listdir(r'C:\Users')]
+
+    def get_users(self):
+        return self.user_list
+
+    def update_paths(self):
+        for user in self.user_list:
+            for suffix in self.suffixes:
+                self.path_list.append(
+                    r'C:\Users\\' + str(user) + suffix
+                )
+
+    def get_paths(self):
+        return self.path_list
+
+
+class Scan(object):
+    """
+    This is the controller.
+    search executable files in folders, then send to virus total to be scanned and fetch report
+    """
+    def __init__(self,paths_list):
+        self.ext_list = load_ext_list()  # loading list of executables extensions
+        self.paths = paths_list  # initializing list of 'suspicious' folders
+        self.tb_scanned = []
+
+    def start_scan(self):
+        self.paths = UsersAndFolders(self.paths).get_paths()  # getting list of paths to 'suspicious' folders
+        self.tb_scanned = search_files(self.paths, self.ext_list)  # calling a method to scan the computer
+
+        # send files to VirusTotal for scanning
+        vt = VirusTotal.VirusTotal()
+        vt.virustotal_manager(self.tb_scanned)
 
 
 

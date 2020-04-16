@@ -4,6 +4,14 @@ __author__ = 'Hagar Zemach'
 import requests, json, time
 
 
+def get_key():
+    """gets api key from file"""
+    with open("APIKey.txt", 'r') as file:
+            key = file.read()
+    file.close()
+    return key
+
+
 class VirusTotal(object):
     """
     checks suspicious file in VirusTotal and fetch the VirusTotal scan results
@@ -18,11 +26,11 @@ class VirusTotal(object):
         self.files_id_dic = {}
         self.scan_id_list = []
         self.result = {}
-        self.infected={}
+        self.infected = {}
 
-    def vt_mng(self,file_list):
+    def virustotal_manager(self, file_list):
         self.scan(file_list)  # send files for scanning
-        print(len(self.scan_id_list), "files were scanned\n fetching reports...")
+        print(f"{len(self.scan_id_list)} files were scanned\n fetching reports...")
         self.get_report()  # fetching reports
 
         for sid in self.result:
@@ -32,8 +40,8 @@ class VirusTotal(object):
                      self.result[sid]['scanners']]
 
         print("\n--=SUMMARY=--")
-        print(len(file_list), "files were sent for scanning")
-        print(len(self.scan_id_list), "files were scanned \n",len(self.infected), "infected files were found:")
+        print(f"{len(file_list)} files were sent for scanning")
+        print(f"{len(self.scan_id_list)} files were scanned \n {len(self.infected)} infected files were found:")
         for name in self.infected:
             print(f"malware detected in {name} with {self.infected[name][0]} of scanners as: {self.infected[name][1]}")
 
@@ -102,7 +110,7 @@ class VirusTotal(object):
                         Flag = False
                         break
                 except:
-                    print("an error has occurred with file", f)
+                    print(f"an error has occurred with file {f}")
                     Flag = False
 
             try:
@@ -115,10 +123,5 @@ class VirusTotal(object):
                 print(response.text)
 
 
-def get_key():
-    """gets api key from file"""
-    with open("APIKey.txt", 'r') as file:
-            key = file.read()
-    file.close()
-    return key
+
 
